@@ -1,1 +1,1 @@
-worker: python Zeldapedia.py
+worker: python main.py
