@@ -5,3 +5,6 @@ pip
 youtube.dl
 ffmpeg
 discord.py[voice]
+os
+datetime
+sys
