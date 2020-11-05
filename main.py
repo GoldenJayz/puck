@@ -9,7 +9,7 @@ client.remove_command("help")
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity = discord.Streaming(name = 'Project Puck', url = 'https://www.twitch.tv/savagepatchboy'))
+    await client.change_presence(activity = discord.Streaming(name = 'lul this bot isnt completed', url = 'https://www.twitch.tv/savagepatchboy'))
     print('We have logged in as {0.user}'.format(client))
 
 @client.group(name="help", invoke_without_command=True, aliases=["commands, cmds"])
