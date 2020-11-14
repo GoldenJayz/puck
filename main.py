@@ -17,7 +17,7 @@ async def help(ctx, member: discord.Member = None):
     embed=discord.Embed(color=0xa9daea, timestamp=ctx.message.created_at, title="Commands:")
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
     embed.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
-    embed.add_field(name="Mod", value="Lists Mod Commands \n**ex.** `-commands mod`")
+    embed.add_field(name="Mod", value="Lists Mod Commands \n**ex.** `-help mod`")
     
     await ctx.send(embed=embed)
 
@@ -42,7 +42,7 @@ async def meme(ctx, member: discord.Member = None):
 
     await ctx.send(embed=embed)
 
-@client.command()
+@client.command(aliases=["cogs"])
 async def coglist(ctx):
     if ctx.author.id == 648362981721374723 or 306767358574198786:
         embed = discord.Embed(color=0x5207df, timestamp=ctx.message.created_at, title="Mod Commands:")
@@ -66,20 +66,6 @@ async def load(ctx, extension):
     
     else:
         await ctx.send("This is an bot owner only command")
-
-@client.command()
-async def cogs(ctx):
-    if ctx.author.id == 648362981721374723 or 306767358574198786:
-        
-        em = discord.Embed( 
-            title='Cogs',
-            description='',
-            colour = discord.Colour.orange()
-        )
-        await ctx.send('', embed=em)
-    
-    else:
-        await ctx.send('Only the bot owner can access this command!')
 
 @client.command()
 async def unload(ctx, extension):
