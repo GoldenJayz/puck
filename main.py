@@ -2,6 +2,7 @@ import discord
 import os
 from discord.ext import commands
 import sys
+import requests
 
 client = commands.Bot(command_prefix = '-')
 client.remove_command("help")
@@ -75,5 +76,53 @@ async def unload(ctx, extension):
     
     else:
         await ctx.send("This is an bot owner only command!")
+
+
+@client.command()
+async def weather(ctx):
+
+  await ctx.send("Please enter a city name!")
+  cityName = await client.wait_for("message")
+  name = str(cityName.content)
+  if ctx.author == cityName.author:
+    try:
+      r = requests.get("http://api.openweathermap.org/data/2.5/weather?q="+str(cityName.content)+"&appid=ff4c64d9183dbb2893d31ae24cc39ca9")
+      json_object = r.json()
+      temp_k = float(json_object['main']['temp'])
+      temp_f = (temp_k - 273.15) * 1.8 + 32
+      
+      climate = r.json()["weather"]
+      cd = climate[0]["main"]
+      
+      middle = 50
+      
+      if temp_f > middle:
+        embed = discord.Embed(timestamp=ctx.message.created_at, title=f"Weather for **{name}**:")
+        embed.add_field(name="Tempature in " + f"*{name}*:", value="🥵 " + str(round(temp_f)) + "°F")
+        embed.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+
+        embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
+
+        
+        await ctx.send(embed=embed)
+
+      elif temp_f < middle:
+        embed = discord.Embed(timestamp=ctx.message.created_at, title=f"Weather for **{name}**:")
+        embed.add_field(name="Results for " + f"*{name}*:", value="🥶 " + str(round(temp_f)) + "°F")
+        embed.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+
+        embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
+        
+        await ctx.send(embed=embed)
+      
+      else:
+        await ctx.send("Error!")
+    
+    except:
+      await ctx.send(name + " does not exist!")
+      
+  
+  elif not ctx.author == cityName.author:
+    await ctx.send("bruh u aint the message author")
 
 client.run(str(os.environ.get('BOT_TOKEN')))
