@@ -3,6 +3,11 @@ import os
 from discord.ext import commands
 import sys
 import requests
+import json
+import datetime
+import time
+
+start_time = time.time()
 
 client = commands.Bot(command_prefix = '-')
 client.remove_command("help")
@@ -124,5 +129,54 @@ async def weather(ctx):
   
   elif not ctx.author == cityName.author:
     await ctx.send("bruh u aint the message author")
+
+@client.command()
+async def leks(ctx):
+    if ctx.author.id == 648362981721374723:
+        await ctx.send("nobody asked leks")
+    else:
+        await ctx.send("u suck")
+
+@client.command()
+async def uptime(ctx):
+    current_time = time.time()
+    difference = int(round(current_time - start_time))
+    text = str(datetime.timedelta(seconds=difference))
+    embed = discord.Embed(colour=ctx.message.author.top_role.colour, timestamp=ctx.message.created_at)
+    embed.add_field(name="Uptime", value=text)
+    embed.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+    try:
+        await ctx.send(embed=embed)
+        
+        with open("C:\\Users\\jmdan\\OneDrive\\Desktop\\Folder\\Coding\\Sites\\app\\static\\puckdata.json") as json_file:
+            json_decoded = json.load(json_file)
+        
+        json_decoded['uptime'] = text
+        
+        with open("C:\\Users\\jmdan\\OneDrive\\Desktop\\Folder\\Coding\\Sites\\app\\static\\puckdata.json", 'w') as json_file:
+            json.dump(json_decoded, json_file)
+
+            
+    except discord.HTTPException:
+        await ctx.send("Current uptime: " + text)
+
+@client.command()
+async def close(ctx):
+    if ctx.author.id == 648362981721374723 or 306767358574198786:
+
+        await ctx.send("Shutting down bot!")
+        
+        with open("C:\\Users\\jmdan\\OneDrive\\Desktop\\Folder\\Coding\\Sites\\app\\static\\puckdata.json") as json_file:
+            json_decoded = json.load(json_file)
+        
+        json_decoded['uptime'] = "Offline"
+        
+        with open("C:\\Users\\jmdan\\OneDrive\\Desktop\\Folder\\Coding\\Sites\\app\\static\\puckdata.json", 'w') as json_file:
+            json.dump(json_decoded, json_file)
+        
+        await quit()
+    
+    else:
+        await ctx.send("Only the owner can close the bot!")
 
 client.run(str(os.environ.get('BOT_TOKEN')))
