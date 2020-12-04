@@ -21,13 +21,14 @@ async def api():
         current_time = time.time()
         difference = int(round(current_time - start_time))
         text = str(datetime.timedelta(seconds=difference))
-        with open("./puk.json") as json_file:
+        with open("C:\\Users\\jmdan\\OneDrive\\Desktop\\Folder\\Coding\\Sites\\app\\puk.json") as json_file:
             json_decoded = json.load(json_file)
 
         json_decoded['uptime'] = text
 
-        with open("./puk.json", 'w') as json_file:
+        with open("C:\\Users\\jmdan\\OneDrive\\Desktop\\Folder\\Coding\\Sites\\app\\puk.json", 'w') as json_file:
             json.dump(json_decoded, json_file)
+
 
 @client.event
 async def on_ready():
@@ -68,6 +69,8 @@ async def mod(ctx, member: discord.Member = None):
         name="Userinfo:", value="Displays the info of desired user \n**ex.** `-userinfo @Gold#1337`")
     embed.add_field(
         name="Purge:", value="Deletes any desired amount of messages \n**ex.** `-purge 5`")
+    embed.add_field(
+        name="Serverinfo:", value="Displays server information \n**ex.** `-serverinfo`")
 
     await ctx.send(embed=embed)
 
@@ -79,6 +82,81 @@ async def meme(ctx, member: discord.Member = None):
         color=0x5207df, timestamp=ctx.message.created_at, title="Meme Commands:")
 
     await ctx.send(embed=embed)
+
+
+@help.command(name="music")
+async def music(ctx):
+    embed = discord.Embed(
+        color=0x3509ae, timestamp=ctx.message.created_at, title="Music Commands:")
+    embed.set_footer(
+        text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+    embed.set_thumbnail(
+        url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
+    embed.add_field(
+        name="Play:", value="Plays a song \n**ex.** `-play <youtube link>`")
+    embed.add_field(
+        name="Skip:", value="Skips song in queue \n**ex.** `-skip`")
+    embed.add_field(
+        name="Stop:", value="Stops/clears the queue \n**ex.** `-stop`", inline=False)
+    embed.add_field(
+        name="Join:", value="Joins the users voice channel \n**ex.** `-join`")
+    embed.add_field(
+        name="Leave:", value="Leaves the users voice channel \n**ex.** `-leave`")
+    embed.add_field(
+        name="Loop:", value="Loops the current song \n**ex.** `-loop`")
+    embed.add_field(
+        name="Volume:", value="Adjusts the volume \n**ex.** `-volume <num 0-2>`")
+
+    await ctx.send(embed=embed)
+
+
+@client.command()
+async def stats(ctx):
+    current_time = time.time()
+    difference = int(round(current_time - start_time))
+    text = str(datetime.timedelta(seconds=difference))
+    embed = discord.Embed(
+        color=0x3509ae, timestamp=ctx.message.created_at, title="Stats:")
+    guilds = len([s for s in client.guilds])
+    r = requests.get("https://puckpanel.glitch.me/api/stats")
+    users = r.json()
+    all = int(users['members'])
+
+    embed.add_field(name="Server Count", value=guilds, inline=True)
+
+    embed.add_field(name="User Count", value=all, inline=True)
+
+    embed.add_field(
+        name="Uptime:", value=f"{text}"
+    )
+
+    embed.add_field(
+        name="Operating System", value=f"Windows 10 Home 64x", inline=False
+    )
+
+    embed.set_footer(
+        text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+
+    await ctx.send(embed=embed)
+
+
+@client.command()
+async def owner(ctx):
+    if ctx.author.id == 648362981721374723 or 306767358574198786:
+        embed = discord.Embed(
+            color=0x3509ae, timestamp=ctx.message.created_at, title="Owner cmds")
+
+        embed.add_field(
+            name="Cogslist", value="Shows avalible cogs to load"
+        )
+        embed.add_field(
+            name="start", value="starts the uptime api timer"
+        )
+
+        await ctx.send(embed=embed)
+
+    else:
+        await ctx.send("You're not the bot owner!")
 
 
 @client.command(aliases=["cogs"])
@@ -185,7 +263,6 @@ async def leks(ctx):
 @client.command()
 async def start(ctx):
     await api()
-    
 
 
 @client.command()
@@ -231,4 +308,5 @@ async def close(ctx):
 
     else:
         await ctx.send("Only the owner can close the bot!")
+
 client.run(str(os.environ.get('BOT_TOKEN')))
