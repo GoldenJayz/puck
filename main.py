@@ -46,6 +46,8 @@ async def help(ctx, member: discord.Member = None):
         text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
     embed.add_field(
         name="Mod", value="Lists Mod Commands \n**ex.** `-help mod`")
+    embed.add_field(
+        name="Music", value="Lists Music Commands \n**ex.** `-help music`")
 
     await ctx.send(embed=embed)
 
@@ -131,7 +133,7 @@ async def stats(ctx):
     )
 
     embed.add_field(
-        name="Operating System", value=f"Windows 10 Home 64x", inline=False
+        name="Operating System", value=f"Windows 10 Home x64", inline=False
     )
 
     embed.set_footer(
@@ -200,56 +202,48 @@ async def unload(ctx, extension):
 
 
 @client.command()
-async def weather(ctx):
+async def weather(ctx, args):
+    name = args
+    try:
+        r = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" + name +"&appid=ff4c64d9183dbb2893d31ae24cc39ca9")
+        json_object = r.json()
+        temp_k = float(json_object['main']['temp'])
+        temp_f = (temp_k - 273.15) * 1.8 + 32
 
-    await ctx.send("Please enter a city name!")
-    cityName = await client.wait_for("message")
-    name = str(cityName.content)
-    if ctx.author == cityName.author:
-        try:
-            r = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" +
-                             str(cityName.content)+"&appid=ff4c64d9183dbb2893d31ae24cc39ca9")
-            json_object = r.json()
-            temp_k = float(json_object['main']['temp'])
-            temp_f = (temp_k - 273.15) * 1.8 + 32
+        climate = r.json()["weather"]
+        cd = climate[0]["main"]
 
-            climate = r.json()["weather"]
-            cd = climate[0]["main"]
+        middle = 50
 
-            middle = 50
+        if temp_f > middle:
+            embed = discord.Embed(
+                timestamp=ctx.message.created_at, title=f"Weather for **{name}**:")
+            embed.add_field(
+                name="Tempature in " + f"*{name}*:", value="🥵 " + str(round(temp_f)) + "°F")
+            embed.set_footer(
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
 
-            if temp_f > middle:
-                embed = discord.Embed(
-                    timestamp=ctx.message.created_at, title=f"Weather for **{name}**:")
-                embed.add_field(
-                    name="Tempature in " + f"*{name}*:", value="🥵 " + str(round(temp_f)) + "°F")
-                embed.set_footer(
-                    text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
 
-                embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
+            await ctx.send(embed=embed)
 
-                await ctx.send(embed=embed)
+        elif temp_f < middle:
+            embed = discord.Embed(
+                timestamp=ctx.message.created_at, title=f"Weather for **{name}**:")
+            embed.add_field(
+                name="Results for " + f"*{name}*:", value="🥶 " + str(round(temp_f)) + "°F")
+            embed.set_footer(
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
 
-            elif temp_f < middle:
-                embed = discord.Embed(
-                    timestamp=ctx.message.created_at, title=f"Weather for **{name}**:")
-                embed.add_field(
-                    name="Results for " + f"*{name}*:", value="🥶 " + str(round(temp_f)) + "°F")
-                embed.set_footer(
-                    text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
 
-                embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
+            await ctx.send(embed=embed)
 
-                await ctx.send(embed=embed)
+        else:
+            await ctx.send("Error!")
 
-            else:
-                await ctx.send("Error!")
-
-        except:
-            await ctx.send(name + " does not exist!")
-
-    elif not ctx.author == cityName.author:
-        await ctx.send("bruh u aint the message author")
+    except:
+        await ctx.send(name + " does not exist!")
 
 
 @client.command()
