@@ -17,13 +17,13 @@ async def open_account(user):
         users[str(user.id)]["wallet"] = 0
         users[str(user.id)]["bank"] = 0
 
-    with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "w") as f:
+    with open(r"./economy.json", "w") as f:
         json.dump(users, f)
     return True
 
 
 async def get_bank_data():
-    with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "r") as f:
+    with open(r"./economy.json", "r") as f:
         users = json.load(f)
 
     return users
@@ -34,7 +34,7 @@ async def update_bank(user, change=0, mode="wallet"):
 
     users[str(user.id)][mode] += change
 
-    with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "w") as f:
+    with open(r"./economy.json", "w") as f:
         json.dump(users, f)
 
         bal = users[str(user.id)]["wallet"], users[str(user.id)]["bank"]
@@ -81,7 +81,7 @@ class economy(commands.Cog):
 
         users[str(user.id)]["wallet"] += earn
 
-        with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "w") as f:
+        with open(r"./economy.json", "w") as f:
             json.dump(users, f)
     
     @beg.error
