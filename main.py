@@ -144,7 +144,7 @@ async def stats(ctx):
 
 @client.command()
 async def owner(ctx):
-    if ctx.author.id == 648362981721374723 or 306767358574198786:
+    if ctx.author.id == 648362981721374723:
         embed = discord.Embed(
             color=0x3509ae, timestamp=ctx.message.created_at, title="Owner cmds")
 
@@ -163,7 +163,7 @@ async def owner(ctx):
 
 @client.command(aliases=["cogs"])
 async def coglist(ctx):
-    if ctx.author.id == 648362981721374723 or 306767358574198786:
+    if ctx.author.id == 648362981721374723:
         embed = discord.Embed(
             color=0x5207df, timestamp=ctx.message.created_at, title="Mod Commands:")
         embed.set_footer(
@@ -183,7 +183,7 @@ async def coglist(ctx):
 
 @client.command()
 async def load(ctx, extension):
-    if ctx.author.id == 648362981721374723 or 306767358574198786:
+    if ctx.message.author.id == 648362981721374723:
         client.load_extension(f'cogs.{extension}')
         await ctx.send('Cog loaded')
 
@@ -193,7 +193,7 @@ async def load(ctx, extension):
 
 @client.command()
 async def unload(ctx, extension):
-    if ctx.author.id == 648362981721374723 or 306767358574198786:
+    if ctx.author.id == 648362981721374723:
         client.unload_extension(f'cogs.{extension}')
         await ctx.send('Cog unloaded')
 
@@ -286,7 +286,7 @@ async def uptime(ctx):
 
 @client.command()
 async def close(ctx):
-    if ctx.author.id == 648362981721374723 or 306767358574198786:
+    if ctx.author.id == 648362981721374723:
 
         await ctx.send("Shutting down bot!")
 
