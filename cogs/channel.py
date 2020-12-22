@@ -15,7 +15,7 @@ class channel(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def create(self, ctx, args):
+    async def create(self, ctx, *, args):
         guild = ctx.message.guild
 
         perms = {
