@@ -303,4 +303,5 @@ async def close(ctx):
     else:
         await ctx.send("Only the owner can close the bot!")
 
-client.run(str(os.environ.get('BOT_TOKEN')))
+client.run(str(os.environ.get('BOTTOKEN')))
+#need to crash the bot for testing purposes.
