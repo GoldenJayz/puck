@@ -108,6 +108,8 @@ async def music(ctx):
         name="Loop:", value="Loops the current song \n**ex.** `-loop`")
     embed.add_field(
         name="Volume:", value="Adjusts the volume \n**ex.** `-volume <num 0-2>`")
+    embed.add_field(
+        name="Search:", value="Searches for a song\n**ex.** `-search`")
 
     await ctx.send(embed=embed)
 
@@ -174,6 +176,7 @@ async def coglist(ctx):
         embed.add_field(name="Meme", value="`-load meme`")
         embed.add_field(name="Automod", value="`-load automod`", inline=False)
         embed.add_field(name="Games", value="`-load games`")
+        embed.add_field(name="Channel", value="`-load channel`")
 
         await ctx.send(embed=embed)
 
@@ -183,7 +186,7 @@ async def coglist(ctx):
 
 @client.command()
 async def load(ctx, extension):
-    if ctx.message.author.id == 648362981721374723:
+    if ctx.author.id == 648362981721374723:
         client.load_extension(f'cogs.{extension}')
         await ctx.send('Cog loaded')
 
@@ -202,10 +205,11 @@ async def unload(ctx, extension):
 
 
 @client.command()
-async def weather(ctx, args):
+async def weather(ctx, *, args):
     name = args
     try:
-        r = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" + name +"&appid=ff4c64d9183dbb2893d31ae24cc39ca9")
+        r = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" +
+                         name + "&appid=ff4c64d9183dbb2893d31ae24cc39ca9")
         json_object = r.json()
         temp_k = float(json_object['main']['temp'])
         temp_f = (temp_k - 273.15) * 1.8 + 32
