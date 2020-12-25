@@ -17,13 +17,13 @@ async def open_account(user):
         users[str(user.id)]["wallet"] = 0
         users[str(user.id)]["bank"] = 0
 
-    with open(r"./economy.json", "w") as f:
+    with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "w") as f:
         json.dump(users, f)
     return True
 
 
 async def get_bank_data():
-    with open(r"./economy.json", "r") as f:
+    with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "r") as f:
         users = json.load(f)
 
     return users
@@ -34,7 +34,7 @@ async def update_bank(user, change=0, mode="wallet"):
 
     users[str(user.id)][mode] += change
 
-    with open(r"./economy.json", "w") as f:
+    with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "w") as f:
         json.dump(users, f)
 
         bal = users[str(user.id)]["wallet"], users[str(user.id)]["bank"]
@@ -47,18 +47,19 @@ class economy(commands.Cog):
     
 
 
-    @commands.command()
-    async def balance(self, ctx):
+    @commands.command(aliases=["bal", "b"])
+    async def balance(self, ctx, member: discord.Member = None):
+        member = ctx.author if not member else member
         await open_account(ctx.author)
 
         user = ctx.author
 
         users = await get_bank_data()
-        wamt = users[str(user.id)]["wallet"]
-        bamt = users[str(user.id)]["bank"]
+        wamt = users[str(member.id)]["wallet"]
+        bamt = users[str(member.id)]["bank"]
 
         embed = discord.Embed(
-            title=f"{ctx.author.name}'s balance", timestamp=ctx.message.created_at)
+            title=f"{member}'s balance", timestamp=ctx.message.created_at)
         embed.set_footer(
             text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
         embed.add_field(name="Wallet", value=wamt)
@@ -66,7 +67,7 @@ class economy(commands.Cog):
 
         await ctx.send(embed=embed)
    
-    @commands.cooldown(1, 350.0, commands.BucketType.guild)
+    @commands.cooldown(1, 350.0, commands.BucketType.user)
     @commands.command()
     async def beg(self, ctx):
         await open_account(ctx.author)
@@ -81,7 +82,7 @@ class economy(commands.Cog):
 
         users[str(user.id)]["wallet"] += earn
 
-        with open(r"./economy.json", "w") as f:
+        with open("C:\\Users\\jmdan\\puckbot\\puck bot files\\cogs\\economy.json", "w") as f:
             json.dump(users, f)
     
     @beg.error
@@ -94,7 +95,7 @@ class economy(commands.Cog):
 
 
 
-    @commands.command()
+    @commands.command(aliases=["with", "w"])
     async def withdraw(self, ctx, amount = None):
         await open_account(ctx.author)
         if amount == None:
@@ -151,7 +152,7 @@ class economy(commands.Cog):
 
         await ctx.send(f"You deposited {amount} coins!")
 
-    @commands.cooldown(1, 60.0, commands.BucketType.guild)
+    @commands.cooldown(1, 60.0, commands.BucketType.user)
     @commands.command(aliases=["send"])
     async def give(self, ctx, member: discord.Member, amount = None):
         await open_account(ctx.author)
@@ -189,7 +190,7 @@ class economy(commands.Cog):
         else:
             raise error
 
-    @commands.cooldown(1, 86400.0, commands.BucketType.guild)
+    @commands.cooldown(1, 86400.0, commands.BucketType.user)
     @commands.command()
     async def slots(self, ctx, amount = None):
         await open_account(ctx.author)
@@ -259,3 +260,4 @@ class economy(commands.Cog):
 
 def setup(client):
     client.add_cog(economy(client))
+
