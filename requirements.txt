@@ -1,9 +1,28 @@
-discord
-asyncio
-Pymoe
-pip
-youtube.dl
-ffmpeg
-discord.py[voice]
-datetime
-flask
+import discord
+from discord.ext import commands
+
+client = commands.Bot(command_prefix="-")
+
+extensions = {
+	"cogs.mod",
+	"cogs.economy",
+	"cogs.channel",
+	"cogs.games"
+}
+		
+@client.event		
+async def on_ready():
+	print(f"{client.user} is now online")
+	await client.change_presence(activity=discord.Streaming(name='haha puck go brrrrrrrrr', url='https://www.twitch.tv/savagepatchboy'))
+	for e in extensions:
+		client.load_extension(e)
+		
+@client.event
+async def on_command_error(error):
+	if isinstance(error, commands.CommandNotFound):
+		return
+		
+		
+		
+
+client.run(")
