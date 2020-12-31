@@ -14,3 +14,9 @@ Puck is a cog based Discord bot. Some of it's features include:
 - play music, 
 - calculate your love between another person ;)
 - Open source
+
+# Examples
+
+![Serverinfo](images/serverinfo.PNG)
+![userinfo](images/userinfoPNG.PNG)
+![weather](images/weather.PNG)
