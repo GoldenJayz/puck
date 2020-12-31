@@ -5,7 +5,11 @@ import os
 import random
 import time
 
+#make random person lsit
+
+
 client = discord.Client()
+  
 
 async def open_account(user):
     users = await get_bank_data()
@@ -44,6 +48,7 @@ class economy(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+         
     
 
 
@@ -259,5 +264,5 @@ class economy(commands.Cog):
 
 
 def setup(client):
+      
     client.add_cog(economy(client))
-
