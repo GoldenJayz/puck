@@ -6,12 +6,14 @@ import random
 from tqdm import tqdm
 
 client = discord.Client()
+  
 
 
 class games(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+        
 
     @commands.command(aliases=["8ball"])
     async def ball(self, ctx, *, args):
@@ -42,6 +44,8 @@ class games(commands.Cog):
 
         await ctx.send(embed=embed)
 
+        #if love meter random number is in range 0-50 place an arrangement of emojis
+
     @love.error
     async def love_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
@@ -49,4 +53,5 @@ class games(commands.Cog):
 
 
 def setup(client):
+      
     client.add_cog(games(client))
