@@ -3,6 +3,7 @@ from discord.ext import tasks, commands
 import datetime
 import asyncio
 
+
 client = discord.Client()
 
 
@@ -37,8 +38,6 @@ class mod(commands.Cog):
 
         await ctx.send(embed=embed)
         await member.ban(reason=None)
-        
-        
 
     @commands.command(pass_context=True)
     @commands.has_permissions(administrator=True)
@@ -78,7 +77,7 @@ class mod(commands.Cog):
         await ctx.send(embed=embed)
         await member.kick(reason=None)
 
-    @commands.command()
+    @commands.command(aliases=["ui"])
     async def userinfo(self, ctx, member: discord.Member = None):
         member = ctx.author if not member else member
         embed = discord.Embed(color=0x00188f, timestamp=ctx.message.created_at)
@@ -111,7 +110,7 @@ class mod(commands.Cog):
         await ctx.channel.purge(limit=amount)
         await ctx.send(embed=embed, delete_after=5.0)
 
-    @commands.command(pass_context=True, aliases=["guildinfo", "server", "guild"])
+    @commands.command(pass_context=True, aliases=["guildinfo", "server", "guild", "si"])
     async def serverinfo(self, ctx):
         message = discord.Message
         icon_url = ctx.message.guild.icon_url
@@ -119,10 +118,10 @@ class mod(commands.Cog):
             embed = discord.Embed(title="Server Info:",
                                   color=0x00188f, timestamp=ctx.message.created_at)
             embed.set_thumbnail(url=icon_url)
-            
+
             embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
-            
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+
             embed.add_field(name="Guild Name:",
                             value=f"{ctx.message.guild.name}")
             embed.add_field(name="Guild Owner:",
@@ -133,10 +132,9 @@ class mod(commands.Cog):
 
             embed.add_field(name="Rules Channel:",
                             value=ctx.message.guild.rules_channel)
-            
+
             embed.add_field(name="Shard:", value=ctx.message.guild.shard_id)
 
-            
             embed.add_field(name="Guild Created on:",
                             value=f"{ctx.message.guild.created_at} UTC")
 
@@ -147,9 +145,9 @@ class mod(commands.Cog):
                                   color=0x00188f, timestamp=ctx.message.created_at)
             embed.set_thumbnail(
                 url="https://beeimg.com/images/d98703602722.png")
-            
+
             embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
 
             embed.add_field(name="Guild name:",
                             value=f"{ctx.message.guild.name}")
@@ -168,6 +166,138 @@ class mod(commands.Cog):
                             value=f"{ctx.message.guild.created_at} UTC")
 
             await ctx.send(embed=embed)
+
+    @commands.command(aliases=["permissions", "perm"])
+    async def perms(self, ctx, member: discord.Member = None, args=None):
+        """Shows the guild permissions of the user"""
+        # this was made listening to really hype splatoon music
+        member = ctx.author if not member else member
+        perm_list = [perm[0] for perm in member.guild_permissions if perm[1]]
+
+        if args == "tuple":
+            await ctx.send(f"```py\n{perm_list}```")
+
+        if args == None:
+
+            embed = discord.Embed(
+                color=0xa9daea, timestamp=ctx.message.created_at, title="Permissions")
+            embed.set_footer(
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            embed.set_thumbnail(
+                url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
+            # I know I could've done this in a better way, but your boi is too lazy to do that
+            if "administrator" in perm_list:
+                embed.add_field(name="Administrator", value="True")
+                if "ban_members" in perm_list:
+                    embed.add_field(name="Ban Members", value="True")
+
+                    if "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="True")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+                    if not "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="False")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+                if not "ban_members" in perm_list:
+                    embed.add_field(name="Ban Members", value="False")
+
+                    if "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="True")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+                    if not "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="False")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+            if not "administrator" in perm_list:
+                embed.add_field(name="Administrator", value="False")
+                # if not administrator set something else in the embed
+                if "ban_members" in perm_list:
+                    embed.add_field(name="Ban Members", value="True")
+
+                    if "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="True")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+                    if not "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="False")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+                if not "ban_members" in perm_list:
+                    embed.add_field(name="Ban Members", value="False")
+
+                    if "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="True")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+                    if not "kick_members" in perm_list:
+                        embed.add_field(name="Kick Members", value="False")
+
+                        if "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="True")
+
+                        if not "view_audit_log" in perm_list:
+                            embed.add_field(
+                                name="View Audit Log", value="False")
+
+            await ctx.send(embed=embed)
+
+    @perms.error
+    async def perms_error(self, ctx, error):
+        if isinstance(error, commands.MemberNotFound):
+            # probably return the shit as an embed idk
+            await ctx.send("Member not found!")
 
 
 def setup(client):
