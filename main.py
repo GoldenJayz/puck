@@ -9,7 +9,7 @@ extensions = {
 	"cogs.economy",
 	"cogs.channel",
 	"cogs.games",
-    "cogs.music",
+	"cogs.music",
 	"cogs.help",
 	"cogs.misc"
 	#guild cog coming soon
