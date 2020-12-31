@@ -3,7 +3,7 @@
 *A multi-purpose discord bot*
 
 
-```python bot.py```
+```python main.py```
 
 
 # About
