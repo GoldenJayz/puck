@@ -4,6 +4,7 @@ from discord.ext import commands
 
 client = discord.Client()
 
+#make everything inline false
 
 class help(commands.Cog):
     def __init__(self, client):
@@ -21,6 +22,10 @@ class help(commands.Cog):
             name="Mod", value="Lists Mod Commands \n**ex.** `-help mod`")
         embed.add_field(
             name="Music", value="Lists Music Commands \n**ex.** `-help music`")
+        embed.add_field(
+            name="Games", value="Lists Games Commands \n**ex.** `-help games`")
+        embed.add_field(
+            name="Economy", value="Lists Economy Commands \n**ex.** `-help economy`")
 
         await ctx.send(embed=embed)
 
@@ -85,7 +90,50 @@ class help(commands.Cog):
 
         await ctx.send(embed=embed)
 
+    @help.command(name="games")
+    async def games(self, ctx):
+        embed = discord.Embed(
+            color=0x3509ae, timestamp=ctx.message.created_at, title="Games Commands:")
+        embed.set_footer(
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+        embed.set_thumbnail(
+            url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
+        embed.add_field(
+            name="8ball:", value="Tests your luck with the 8ball \n**ex.** `-8ball <question>`")
+        embed.add_field(
+            name="Love:", value="Shows how much love you have for another person! \n**ex.** `-love <user>`")
+        embed.add_field(
+            name="Hug:", value="Hug somebody! \n**ex.** `-hug <user>`")
 
+        await ctx.send(embed=embed)
+
+    @help.command(name="economy")
+    async def economy(self, ctx):
+        embed = discord.Embed(
+            color=0x3509ae, timestamp=ctx.message.created_at, title="Economy Commands:")
+        embed.set_footer(
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+        embed.set_thumbnail(
+            url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
+        embed.add_field(
+            name="Balance:", value="Displays your balance \n**ex.** `-balance <user> (optional)`")
+        embed.add_field(
+            name="Beg:", value="Beg for money like a homeless person! \n**ex.** `-beg`")
+        embed.add_field(
+            name="Slots:", value="Gamble your money! \n**ex.** `-slots <amount>`")
+        embed.add_field(
+            name="Withdraw:", value="Withdraw your money from the bank! \n**ex.** `-withdraw <amount>`")
+        embed.add_field(
+            name="Deposit:", value="Deposit your money from your wallet to the bank! \n**ex.** `-deposit <amount>`")
+        embed.add_field(
+            name="Give:", value="Give money to anybody! \n**ex.** `-give <user> <amount>`")
+        embed.add_field(
+            name="Rob:", value="Mug another person just like in Detroit! \n**ex.** `-rob <user>`")
+            
+
+        await ctx.send(embed=embed)
+
+#create more fun commands
 
 
 
