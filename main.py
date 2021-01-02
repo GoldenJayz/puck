@@ -15,6 +15,10 @@ extensions = {
 	#guild cog coming soon
 }
 
+#add did u know command?
+
+#create would you rather command randomized and user selected
+
 #create convo cog
 
 #add new commands to help command
