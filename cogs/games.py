@@ -51,6 +51,26 @@ class games(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("You need to mention a person!")
 
+    @commands.command()
+    async def hug(self, ctx, member: discord.Member):
+        member = ctx.author if not member else member
+        huglist = ["https://media1.tenor.com/images/6db54c4d6dad5f1f2863d878cfb2d8df/tenor.gif?itemid=7324587", "https://media1.tenor.com/images/969f0f462e4b7350da543f0231ba94cb/tenor.gif?itemid=14246498", "https://media1.tenor.com/images/af76e9a0652575b414251b6490509a36/tenor.gif?itemid=5640885", "https://media1.tenor.com/images/c2156769899d169306d16b063a55d0b2/tenor.gif?itemid=14584871"]
+        #i copy and pasted here cause im lazy
+        embed = discord.Embed(title="Hug",
+                              color=0xd400ff, timestamp=ctx.message.created_at)
+        embed.add_field(
+            name=f"{ctx.author} hugged {member}!", value=f"*{ctx.author} ran up to {member} and gave them a big fat hug*")
+        embed.set_image(url=random.choice(huglist))
+        embed.set_footer(
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+
+        await ctx.send(embed=embed)
+    
+    @hug.error
+    async def hug_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Bro what are you doing!? You cannot hug yourself :(((")
+
 
 def setup(client):
       
