@@ -38,6 +38,15 @@ class mod(commands.Cog):
 
         await ctx.send(embed=embed)
         await member.ban(reason=None)
+    
+    @ban.error
+    async def ban_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("You must specify a user!")
+        
+        elif isinstance(error, commands.CommandInvokeError):
+            await ctx.send(f"```{error}```")
+    
 
     @commands.command(pass_context=True)
     @commands.has_permissions(administrator=True)
@@ -63,6 +72,14 @@ class mod(commands.Cog):
 
                 await ctx.channel.send(embed=embed)
 
+    @unban.error
+    async def unban_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("You must specify a user!")
+        
+        elif isinstance(error, commands.CommandInvokeError):
+            await ctx.send(f"```{error}```")
+
     @commands.command(pass_context=True)
     @commands.has_permissions(administrator=True)
     async def kick(self, ctx, member: discord.Member):
@@ -76,6 +93,14 @@ class mod(commands.Cog):
         embed.add_field(name="User:", value=f"{member}", inline=False)
         await ctx.send(embed=embed)
         await member.kick(reason=None)
+
+    @kick.error
+    async def kick_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("You must specify a user!")
+        
+        elif isinstance(error, commands.CommandInvokeError):
+            await ctx.send(f"```{error}```")
 
     @commands.command(aliases=["ui"])
     async def userinfo(self, ctx, member: discord.Member = None):
@@ -93,6 +118,7 @@ class mod(commands.Cog):
                         value=member.joined_at.strftime("%a, %#d %B %Y, %I:%M %p UTC"))
 
         await ctx.send(embed=embed)
+    
 
     @commands.command(pass_context=True)
     @commands.has_permissions(administrator=True)
