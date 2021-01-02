@@ -7,9 +7,15 @@ import time
 
 #make random person lsit
 
+#convert cooldown into a float
 
 client = discord.Client()
   
+
+people = ["Bill Cosby", "Donald Trump", "Joe Biden", "ur mom", "Gold's mom", "Gold", "Kirb", "Nora Boochakii", "A random homeless man"]
+
+
+
 
 async def open_account(user):
     users = await get_bank_data()
@@ -72,9 +78,10 @@ class economy(commands.Cog):
 
         await ctx.send(embed=embed)
    
-    @commands.cooldown(1, 350.0, commands.BucketType.user)
+    @commands.cooldown(1, 60.0, commands.BucketType.user)
     @commands.command()
     async def beg(self, ctx):
+        selector = random.choice(people)
         await open_account(ctx.author)
 
         users = await get_bank_data()
@@ -83,7 +90,7 @@ class economy(commands.Cog):
 
         earn = random.randrange(500)
 
-        await ctx.send(f"Bill cosby gave you {earn} coins!")
+        await ctx.send(f"{selector} gave you {earn} coins!")
 
         users[str(user.id)]["wallet"] += earn
 
