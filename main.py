@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+import json
+from datetime import date
 
 client = commands.Bot(command_prefix="-")
 client.remove_command("help")
@@ -9,15 +11,12 @@ extensions = {
 	"cogs.economy",
 	"cogs.channel",
 	"cogs.games",
-	"cogs.music",
 	"cogs.help",
 	"cogs.misc"
 	#guild cog coming soon
 }
 
-#add did u know command?
-
-#create would you rather command randomized and user selected
+today = date.today()
 
 #create convo cog
 
@@ -27,9 +26,23 @@ extensions = {
 async def on_ready():
 	"""Puck Initilization"""
 	print(f"{client.user} is now online")
-	await client.change_presence(activity=discord.Streaming(name='Puck is being tested right now!', url='https://www.twitch.tv/savagepatchboy'))
+	await client.change_presence(activity=discord.Streaming(name='Type -help for a list of commands!', url='https://www.twitch.tv/savagepatchboy'))
 	for e in extensions:
 		client.load_extension(e)
+		get = e[-1]
+		splicedcogname = e[5:-1] + get
+		print(f"Loaded {splicedcogname} extension on {today}")
+		with open('//home//pi//Desktop//cogs//loadlog.json') as f:
+			load = json.load(f)
+		
+		#make a json key with the date and the data inside the today date key
+		load[f'{today} - {e}'] = f"{e} Loaded successfully on {today}"
+		
+		with open("//home//pi//Desktop//cogs//loadlog.json", 'w') as f:
+			json.dump(load, f, indent = 4, sort_keys=True)
+
+#get the date and display it inside a json key. After this I want to put it into the Api and test out NGROK for hosting.
+#log everything into a json file then display it on the website.
 
 #this just makes the bot ignore the commandnotfound error
 @client.event
@@ -53,4 +66,5 @@ async def on_command_error(ctx, error):
 		
 		
 
-client.run("token goes here")
+
+client.run("token")
