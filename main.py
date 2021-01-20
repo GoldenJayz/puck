@@ -26,7 +26,7 @@ today = date.today()
 async def on_ready():
 	"""Puck Initilization"""
 	print(f"{client.user} is now online")
-	await client.change_presence(activity=discord.Streaming(name='Type -help for a list of commands!', url='https://www.twitch.tv/savagepatchboy'))
+	await client.change_presence(activity=discord.Streaming(name='rip moms electric bill', url='https://www.twitch.tv/savagepatchboy'))
 	for e in extensions:
 		client.load_extension(e)
 		get = e[-1]
@@ -49,7 +49,21 @@ async def on_ready():
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return True
-
+        
+@client.event
+async def on_message_delete(message):
+	print(message.content)
+	await message.channel.send(f"{message.author} deleted: {message.content}")
+	with open("//home//pi//Desktop//cogs//snipe.json") as f:
+		load = json.load(f)
+		
+	load[f"{message.author}"] = f"{message.content}"
+		
+	with open("//home//pi//Desktop//cogs//snipe.json", 'w') as f:
+		json.dump(load, f, indent = 4, sort_keys = True)
+		
+#make it write into a users account in a json file then make a sniper command to snipe the message from the json file
+#create key that has the message author and last deleted messageyhgf
 
 
 # @client.event
