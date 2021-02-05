@@ -65,7 +65,16 @@ async def on_message_delete(message):
 #make it write into a users account in a json file then make a sniper command to snipe the message from the json file
 #create key that has the message author and last deleted messageyhgf
 
+@client.command()
+async def lock(ctx, channel: discord.TextChannel=None):
+	member = ctx.author
+	role = discord.utils.get(member.guild.roles, name="Gay Fuck")
+	channel = channel or ctx.channel
+	overwrite = channel.overwrites_for(role)
+	overwrite.send_messages = False
+	await channel.set_permissions(role, overwrite=overwrite)
 
+	await ctx.send('Channel locked.')
 # @client.event
 # async def on_message(message):
 	# if message.content == "-emoji":
