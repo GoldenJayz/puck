@@ -1,5 +1,5 @@
 import discord
-from discord.ext import tasks, commands
+from discord.ext import commands
 import datetime
 import asyncio
 
@@ -11,17 +11,6 @@ class mod(commands.Cog):
 
     def __init__(self, client):
         self.client = client
-
-    @tasks.loop(seconds=5)
-    async def printer(self):
-        await ctx.channel.create_invite(max_age=300)
-
-    @printer.before_loop
-    async def before_printer(self):
-        print('waiting...')
-        await self.client.wait_until_ready()
-
-    printer.start()
 
     @commands.command(pass_context=True)
     # error when trying to ban someone not in the guild

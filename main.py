@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-client = commands.Bot(command_prefix="!")
+client = commands.Bot(command_prefix="-")
 client.remove_command("help")
 
 extensions = {
@@ -9,8 +9,8 @@ extensions = {
 	"cogs.economy",
 	"cogs.channel",
 	"cogs.games",
-    "cogs.music",
-	"cogs.misc"
+	"cogs.misc",
+	"cogs.help"
 	#guild cog coming soon
 }
 
@@ -54,4 +54,4 @@ async def lock(ctx, channel: discord.TextChannel=None):
 		
 		
 
-client.run("token")
+client.run("NzY3MDg3Nzk4ODA0MjgzNDAz.X4s0Lw.PtZjDiAG8uYQ3Omf2-rhpzgO2CQ")

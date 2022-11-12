@@ -1,23 +1,7 @@
 import discord
 from discord.ext import commands
-from discord.ext import menus
-
 
 client = discord.Client()
-
-#make everything inline false
-class MyMenu(menus.Menu):
-    async def send_initial_message(self, ctx, channel):
-        return await channel.send(f'Hello {ctx.author}')
-
-    @menus.button('\N{THUMBS UP SIGN}')
-    async def on_thumbs_up(self, payload):
-        await self.message.edit(content='ty bro')
-
-    @menus.button('\N{THUMBS DOWN SIGN}')
-    async def on_thumbs_down(self, payload):
-        await self.message.edit(content="wow ur racist")
-
 
 class help(commands.Cog):
     def __init__(self, client):

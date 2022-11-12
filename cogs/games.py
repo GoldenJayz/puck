@@ -3,11 +3,8 @@ from discord.ext import commands
 import datetime
 import asyncio
 import random
-from tqdm import tqdm
 
 client = discord.Client()
-  
-
 
 class games(commands.Cog):
 
