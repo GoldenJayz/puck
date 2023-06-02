@@ -41,4 +41,4 @@ async def lock(ctx, channel: discord.TextChannel=None):
 	await ctx.send('Channel locked.')
 
 
-client.run("NzY3MDg3Nzk4ODA0MjgzNDAz.Gkaup7.WYIa5BfX_mZIhXBEWVvsJFj_VGxddV1WpNJvyY")
+client.run("force pushed my token :/")
