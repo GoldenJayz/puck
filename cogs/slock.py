@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 
-client = discord.Client()
 
 
 class slock(commands.Cog):
@@ -22,5 +21,5 @@ class slock(commands.Cog):
 
 				
 
-def setup(client):
-    client.add_cog(slock(client))
+async def setup(client):
+    await client.add_cog(slock(client))

@@ -3,7 +3,6 @@ from discord.ext import commands
 import datetime
 import asyncio
 
-client = discord.Client()
 
 class automod(commands.Cog):
 
@@ -17,5 +16,5 @@ class automod(commands.Cog):
 
 
 
-def setup(client):
-    client.add_cog(automod(client))
+async def setup(client):
+    await client.add_cog(automod(client))

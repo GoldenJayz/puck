@@ -4,7 +4,6 @@ import datetime
 import asyncio
 
 
-client = discord.Client()
 
 
 class mod(commands.Cog):
@@ -21,7 +20,7 @@ class mod(commands.Cog):
                               timestamp=ctx.message.created_at)
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
-        embed.set_author(icon_url=ctx.author.avatar_url, name=ctx.author)
+        embed.set_author(icon_url=ctx.author.avatar, name=ctx.author)
         embed.set_footer(text=f"{member} has been slain by the ban hammer! 😳")
         embed.add_field(name="User:", value=f"{member}", inline=False)
 
@@ -54,7 +53,7 @@ class mod(commands.Cog):
                 embed.set_thumbnail(
                     url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
                 embed.set_author(
-                    icon_url=ctx.author.avatar_url, name=ctx.author)
+                    icon_url=ctx.author.avatar, name=ctx.author)
                 embed.set_footer(text=f"{member} has been unbanned!")
                 # add more to this command
                 embed.add_field(name="User:", value=f"{member}", inline=False)
@@ -77,7 +76,7 @@ class mod(commands.Cog):
                               timestamp=ctx.message.created_at)
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
-        embed.set_author(icon_url=ctx.author.avatar_url, name=ctx.author)
+        embed.set_author(icon_url=ctx.author.avatar, name=ctx.author)
         embed.set_footer(text=f"{member} has been kicked! 😳")
         embed.add_field(name="User:", value=f"{member}", inline=False)
         await ctx.send(embed=embed)
@@ -96,9 +95,9 @@ class mod(commands.Cog):
         member = ctx.author if not member else member
         embed = discord.Embed(color=0x00188f, timestamp=ctx.message.created_at)
         embed.set_author(name=f"User Info - {member}")
-        embed.set_thumbnail(url=member.avatar_url)
+        embed.set_thumbnail(url=member.avatar)
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.add_field(name="ID:", value=member.id)
         embed.add_field(name="Nickname:", value=member.display_name)
         embed.add_field(name="Account Created at:", inline=False,
@@ -117,7 +116,7 @@ class mod(commands.Cog):
         embed = discord.Embed(title="Purge", color=0xff0000,
                               timestamp=ctx.message.created_at)
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.add_field(name="Messages Deleted:", value=limit)
 
         msg = await ctx.send(embed=embed)
@@ -128,14 +127,14 @@ class mod(commands.Cog):
     @commands.command(pass_context=True, aliases=["guildinfo", "server", "guild", "si"])
     async def serverinfo(self, ctx):
         message = discord.Message
-        icon_url = ctx.message.guild.icon_url
+        icon_url = ctx.message.guild.icon
         if ctx.message.guild.icon:
             embed = discord.Embed(title="Server Info:",
                                   color=0x00188f, timestamp=ctx.message.created_at)
             embed.set_thumbnail(url=icon_url)
 
             embed.set_footer(
-                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
 
             embed.add_field(name="Guild Name:",
                             value=f"{ctx.message.guild.name}")
@@ -162,7 +161,7 @@ class mod(commands.Cog):
                 url="https://beeimg.com/images/d98703602722.png")
 
             embed.set_footer(
-                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
 
             embed.add_field(name="Guild name:",
                             value=f"{ctx.message.guild.name}")
@@ -197,7 +196,7 @@ class mod(commands.Cog):
             embed = discord.Embed(
                 color=0xa9daea, timestamp=ctx.message.created_at, title="Permissions")
             embed.set_footer(
-                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
             # I know I could've done this in a better way, but your boi is too lazy to do that
@@ -315,5 +314,5 @@ class mod(commands.Cog):
             await ctx.send("Member not found!")
 
 
-def setup(client):
-    client.add_cog(mod(client))
+async def setup(client):
+    await client.add_cog(mod(client))

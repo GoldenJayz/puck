@@ -4,7 +4,6 @@ import asyncio
 import youtube_dl
 from discord.voice_client import VoiceClient
 
-client = discord.Client()
   
 
 songs = asyncio.Queue()
@@ -86,6 +85,6 @@ class music(commands.Cog):
 
 
 
-def setup(client):
+async def setup(client):
       
-    client.add_cog(music(client))
+    await client.add_cog(music(client))

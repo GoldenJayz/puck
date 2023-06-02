@@ -6,7 +6,6 @@ import requests
 import time
 import math
 
-client = discord.Client()
 
 
 class channel(commands.Cog):
@@ -56,5 +55,5 @@ class channel(commands.Cog):
             await ctx.send("You have to be inside a voice channel!")
 
 
-def setup(client):
-    client.add_cog(channel(client))
+async def setup(client):
+    await client.add_cog(channel(client))

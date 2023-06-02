@@ -6,7 +6,6 @@ import datetime
 import json
 
 start_time = time.time()
-client = discord.Client()
 
 
 class misc(commands.Cog):
@@ -34,7 +33,7 @@ class misc(commands.Cog):
                 embed.add_field(
                     name="Tempature in " + f"*{name}*:", value="🥵 " + str(round(temp_f)) + "°F")
                 embed.set_footer(
-                    text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                    text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
 
                 embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
 
@@ -46,7 +45,7 @@ class misc(commands.Cog):
                 embed.add_field(
                     name="Results for " + f"*{name}*:", value="🥶 " + str(round(temp_f)) + "°F")
                 embed.set_footer(
-                    text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                    text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
 
                 embed.add_field(name="Sky in " + f"*{name}*:", value=str(cd))
 
@@ -82,7 +81,7 @@ class misc(commands.Cog):
             embed = discord.Embed(
                 color=0x5207df, timestamp=ctx.message.created_at, title="Mod Commands:")
             embed.set_footer(
-                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+                text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
             embed.set_thumbnail(
                 url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
             embed.add_field(name="Mod:", value="`-load mod`")
@@ -123,7 +122,7 @@ class misc(commands.Cog):
         )
 
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
 
         await ctx.send(embed=embed)
 
@@ -159,7 +158,7 @@ class misc(commands.Cog):
             colour=ctx.message.author.top_role.colour, timestamp=ctx.message.created_at)
         embed.add_field(name="Uptime", value=text)
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         try:
             await ctx.send(embed=embed)
 
@@ -175,5 +174,5 @@ class misc(commands.Cog):
             await ctx.send("Current uptime: " + text)
 
 
-def setup(client):
-    client.add_cog(misc(client))
+async def setup(client):
+    await client.add_cog(misc(client))

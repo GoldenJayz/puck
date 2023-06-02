@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-client = commands.Bot(command_prefix="-")
+intents = discord.Intents.all()
+client = commands.Bot(command_prefix="-", intents=intents)
 client.remove_command("help")
 
 extensions = {
@@ -22,9 +23,9 @@ extensions = {
 async def on_ready():
 	"""Puck Initilization"""
 	print(f"{client.user} is now online")
-	await client.change_presence(activity=discord.Streaming(name='Puck goes brrrrrrrr', url='https://www.twitch.tv/savagepatchboy'))
+	await client.change_presence(activity=discord.Streaming(name="\"I want a women and not a girl\" - Blake", url='https://www.twitch.tv/savagepatchboy'))
 	for e in extensions:
-		client.load_extension(e)
+		await client.load_extension(e)
 
 #this just makes the bot ignore the commandnotfound error
 
@@ -40,18 +41,4 @@ async def lock(ctx, channel: discord.TextChannel=None):
 	await ctx.send('Channel locked.')
 
 
-# @client.event
-# async def on_message(message):
-	# if message.content == "-emoji":
-		# if ":" == message.content[0] and ":" == message.content[-1]:
-			# emoji = message.content[1:-1]
-			# string the emoji name and id together then say it back
-		
-		
-
-
-
-		
-		
-
-client.run("NzY3MDg3Nzk4ODA0MjgzNDAz.X4s0Lw.PtZjDiAG8uYQ3Omf2-rhpzgO2CQ")
+client.run("NzY3MDg3Nzk4ODA0MjgzNDAz.Gkaup7.WYIa5BfX_mZIhXBEWVvsJFj_VGxddV1WpNJvyY")

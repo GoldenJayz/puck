@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands
 
-client = discord.Client()
 
 class help(commands.Cog):
     def __init__(self, client):
@@ -14,7 +13,7 @@ class help(commands.Cog):
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.add_field(
             name="Mod", value="Lists Mod Commands \n**ex.** `-help mod`")
         embed.add_field(
@@ -32,7 +31,7 @@ class help(commands.Cog):
         embed = discord.Embed(
             color=0x5207df, timestamp=ctx.message.created_at, title="Mod Commands:")
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
         embed.add_field(
@@ -65,7 +64,7 @@ class help(commands.Cog):
         embed = discord.Embed(
             color=0x3509ae, timestamp=ctx.message.created_at, title="Music Commands:")
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
         embed.add_field(
@@ -92,7 +91,7 @@ class help(commands.Cog):
         embed = discord.Embed(
             color=0x3509ae, timestamp=ctx.message.created_at, title="Games Commands:")
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
         embed.add_field(
@@ -109,7 +108,7 @@ class help(commands.Cog):
         embed = discord.Embed(
             color=0x3509ae, timestamp=ctx.message.created_at, title="Economy Commands:")
         embed.set_footer(
-            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url)
+            text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar)
         embed.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/767087798804283403/c763a1556e16a62e576fbb98a174a374.png?size=1024")
         embed.add_field(
@@ -142,5 +141,5 @@ class help(commands.Cog):
 
 
 
-def setup(client):
-    client.add_cog(help(client))
+async def setup(client):
+    await client.add_cog(help(client))
